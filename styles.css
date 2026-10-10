@@ -125,6 +125,9 @@ section{padding-block:clamp(2.8rem,7vw,5rem)}
 .cards.four{grid-template-columns:repeat(4,1fr)}
 @media(max-width:980px){.cards.four{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.cards.four{grid-template-columns:1fr}}
+.cards.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.cards.three{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cards.three{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.3rem 1.4rem;
   box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0;position:relative}
 .card.feature{border-color:color-mix(in srgb,var(--primary) 45%, var(--border));box-shadow:var(--shadow-lg)}
