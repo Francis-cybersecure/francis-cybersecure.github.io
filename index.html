@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Mulish:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <a class="skip" href="#top">Aller au contenu</a>
@@ -443,12 +444,14 @@
   } else {
     var io = new IntersectionObserver(function(ents){
       ents.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-    }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    }, {threshold:.04, rootMargin:'0px 0px -5% 0px'});
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
     // les éléments déjà visibles au chargement
     requestAnimationFrame(function(){
       document.querySelectorAll('.hero .reveal').forEach(function(el){ el.classList.add('in'); });
     });
+    // filet de sécurité : rien ne doit rester invisible
+    setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); }); }, 1500);
   }
 
   /* 3 · Cartes offres : lueur qui suit le curseur */
@@ -481,14 +484,14 @@
     W=hero.clientWidth; H=hero.clientHeight;
     cv.width=W*DPR; cv.height=H*DPR; cv.style.width=W+'px'; cv.style.height=H+'px';
     ctx.setTransform(DPR,0,0,DPR,0,0);
-    var n=Math.round(Math.min(96, Math.max(34, W*H/15000)));
+    var n=Math.round(Math.min(56, Math.max(22, W*H/24000)));
     nodes=[];
-    for(var i=0;i<n;i++) nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2});
+    for(var i=0;i<n;i++) nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.14,vy:(Math.random()-.5)*.14});
   }
   size(); window.addEventListener('resize',size);
   hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.on=true;});
   hero.addEventListener('mouseleave',function(){mouse.on=false;});
-  var D=150;
+  var D=125;
   function frame(){
     ctx.clearRect(0,0,W,H);
     for(var i=0;i<nodes.length;i++){var p=nodes[i];
@@ -496,11 +499,11 @@
       if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
       if(mouse.on){var dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);if(d<170&&d>0){p.vx+=dx/d*.006;p.vy+=dy/d*.006;}}
       p.vx*=.995;p.vy*=.995;
-      ctx.beginPath();ctx.arc(p.x,p.y,1.7,0,6.283);ctx.fillStyle='rgba('+SAR+',.5)';ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.283);ctx.fillStyle='rgba('+SAR+',.38)';ctx.fill();
     }
     for(var i=0;i<nodes.length;i++)for(var j=i+1;j<nodes.length;j++){
       var a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
-      if(d<D){ctx.strokeStyle='rgba('+SAR+','+(.16*(1-d/D))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+      if(d<D){ctx.strokeStyle='rgba('+SAR+','+(.08*(1-d/D))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
     }
     if(mouse.on){for(var i=0;i<nodes.length;i++){var p=nodes[i],dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
       if(d<175){ctx.strokeStyle='rgba('+GOLD+','+(.5*(1-d/175))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}}

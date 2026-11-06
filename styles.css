@@ -165,42 +165,47 @@ footer.site{border-top:1px solid var(--line);background:var(--surface-2)}
    v3.1 — Vie & interaction (réseau, logo animé, reveals)
    ============================================================ */
 
-/* --- Réseau derrière le hero + zone calme --- */
+/* --- Réseau derrière le hero + zone calme ---
+   Règle d'or : tout est VISIBLE par défaut. Les animations ne s'activent
+   que si le JS a ajouté la classe .js sur <html>. Si le JS échoue ou traîne,
+   la page reste lisible et bien agencée. --- */
 .hero{isolation:isolate}
 .hero-net{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hero-calm{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(100deg, var(--bg) 14%, color-mix(in srgb,var(--bg) 72%,transparent) 40%, transparent 64%)}
+  background:linear-gradient(100deg, #f5f2ea 18%, rgba(245,242,234,.80) 44%, rgba(245,242,234,0) 68%)}
 .hero-grid{z-index:2}
 @media(max-width:860px){
-  .hero-calm{background:linear-gradient(180deg, transparent 0%, var(--bg) 46%)}
+  .hero-calm{background:linear-gradient(180deg, rgba(245,242,234,.35) 0%, #f5f2ea 48%)}
 }
 
-/* --- Logo animé du hero (reste UN logo) --- */
+/* --- Logo du hero : VISIBLE par défaut, s'assemble seulement si JS --- */
 .hero-logo{display:grid;place-items:center;position:relative}
 .hero-logo svg{width:100%;max-width:252px;height:auto;overflow:visible}
 @media(max-width:860px){.hero-logo{display:none}}
-.hl-halo{transform-origin:32px 32px;opacity:0;animation:halo-in 1s ease .15s forwards}
+.hl-orbit{transform-origin:32px 32px;transform-box:fill-box;opacity:.5}
+/* entrée animée uniquement quand JS actif */
+.js .hl-halo{opacity:0;animation:halo-in 1s ease .15s forwards}
 @keyframes halo-in{to{opacity:1}}
-.hl-ray{transform-origin:32px 32px;opacity:0;animation:ray-in .7s cubic-bezier(.2,.75,.2,1) forwards}
-.hl-ray.r1{animation-delay:.10s}.hl-ray.r2{animation-delay:.20s}.hl-ray.r3{animation-delay:.30s}
-.hl-ray.r4{animation-delay:.40s}.hl-ray.r5{animation-delay:.50s}
+.js .hl-ray{transform-origin:32px 32px;opacity:0;animation:ray-in .7s cubic-bezier(.2,.75,.2,1) forwards}
+.js .hl-ray.r1{animation-delay:.10s}.js .hl-ray.r2{animation-delay:.20s}.js .hl-ray.r3{animation-delay:.30s}
+.js .hl-ray.r4{animation-delay:.40s}.js .hl-ray.r5{animation-delay:.50s}
 @keyframes ray-in{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
-.hl-core{transform-origin:32px 32px;opacity:0;animation:core-in .55s cubic-bezier(.2,.8,.2,1) .62s forwards, core-breathe 3.6s ease-in-out 1.3s infinite}
+.js .hl-core{opacity:0;animation:core-in .55s cubic-bezier(.2,.8,.2,1) .62s forwards, core-breathe 3.6s ease-in-out 1.3s infinite}
 @keyframes core-in{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
-@keyframes core-breathe{0%,100%{transform:scale(1);filter:none}50%{transform:scale(1.22);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--gold-soft) 70%,transparent))}}
-.hl-orbit{transform-origin:32px 32px;transform-box:fill-box;animation:spin 26s linear infinite;opacity:.5}
+@keyframes core-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.2);filter:drop-shadow(0 0 5px rgba(230,178,77,.7))}}
+.js .hl-orbit{animation:spin 26s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.hero-logo.assembled .hl-glow{animation:pulse-glow 4s ease-in-out infinite}
+.js .hero-logo.assembled .hl-glow{animation:pulse-glow 4s ease-in-out infinite}
 @keyframes pulse-glow{0%,100%{opacity:.25}50%{opacity:.5}}
 
-/* --- Micro-logo d'en-tête : cœur qui respire doucement --- */
-.brand .mark .hb{transform-origin:32px 32px;animation:hb 4.5s ease-in-out infinite}
+/* --- Micro-logo d'en-tête : cœur qui respire doucement (si JS) --- */
+.js .brand .mark .hb{transform-origin:32px 32px;animation:hb 4.5s ease-in-out infinite}
 @keyframes hb{0%,100%{opacity:.9}50%{opacity:1}}
 
-/* --- Révélations au scroll --- */
-.reveal{opacity:0;transform:translateY(22px);
+/* --- Révélations au scroll : visibles par défaut, animées si JS --- */
+.js .reveal{opacity:0;transform:translateY(22px);
   transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
+.js .reveal.in{opacity:1;transform:none}
 .reveal.d1{transition-delay:.06s}.reveal.d2{transition-delay:.12s}
 .reveal.d3{transition-delay:.18s}.reveal.d4{transition-delay:.24s}
 
@@ -208,7 +213,7 @@ footer.site{border-top:1px solid var(--line);background:var(--surface-2)}
 .offer{overflow:hidden}
 .offer::before{content:"";position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .3s;
   background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),
-    color-mix(in srgb,var(--primary) 12%,transparent), transparent 70%)}
+    rgba(19,66,76,.12), transparent 70%)}
 .offer:hover::before{opacity:1}
 .offer > *{position:relative;z-index:1}
 .offer > .ribbon,.offer > .tag{position:absolute;z-index:2}
