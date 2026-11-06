@@ -8,7 +8,7 @@
 
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="theme-color" content="#13424c">
+<meta name="theme-color" content="#071d1d">
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -77,6 +77,15 @@
           <circle class="hl-core" cx="32" cy="32" r="3.8" fill="#e6b24d"/>
         </svg>
       </div>
+    </div>
+  </section>
+
+  <!-- BANDEAU STATS -->
+  <section class="statband" aria-label="En bref">
+    <div class="wrap">
+      <div class="stat reveal"><span class="big">Toutes filières</span><span class="lbl">droit, santé, éco, tech, arts…</span></div>
+      <div class="stat reveal d1"><span class="big">Tarif étudiant</span><span class="lbl">pensé pour un budget serré</span></div>
+      <div class="stat reveal d2"><span class="big">Sans tricher</span><span class="lbl">tu avances vraiment, pas juste rendre</span></div>
     </div>
   </section>
 
@@ -325,7 +334,7 @@
   var cv=document.getElementById('heroNet'); if(!cv) return;
   var hero=cv.closest('.hero'), ctx=cv.getContext('2d');
   var W,H,DPR,nodes=[],mouse={x:-999,y:-999,on:false};
-  var SAR='27,74,82', GOLD='178,134,44';
+  var SAR='179,205,200', GOLD='231,184,78';
   function size(){
     DPR=Math.min(window.devicePixelRatio||1,2);
     W=hero.clientWidth; H=hero.clientHeight;
@@ -346,11 +355,11 @@
       if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
       if(mouse.on){var dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);if(d<170&&d>0){p.vx+=dx/d*.006;p.vy+=dy/d*.006;}}
       p.vx*=.995;p.vy*=.995;
-      ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.283);ctx.fillStyle='rgba('+SAR+',.38)';ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.283);ctx.fillStyle='rgba('+SAR+',.6)';ctx.fill();
     }
     for(var i=0;i<nodes.length;i++)for(var j=i+1;j<nodes.length;j++){
       var a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
-      if(d<D){ctx.strokeStyle='rgba('+SAR+','+(.08*(1-d/D))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+      if(d<D){ctx.strokeStyle='rgba('+SAR+','+(.12*(1-d/D))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
     }
     if(mouse.on){for(var i=0;i<nodes.length;i++){var p=nodes[i],dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
       if(d<175){ctx.strokeStyle='rgba('+GOLD+','+(.5*(1-d/175))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}}
