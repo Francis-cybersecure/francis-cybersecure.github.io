@@ -104,6 +104,8 @@ header.site{position:sticky;top:0;z-index:50;
 @media(max-width:860px){.hero-logo{display:none}}
 .hero-logo .hl-ray{fill:#eaf1ee}
 .hero-logo .hl-core{fill:var(--gold-bright)}
+.js .hero-logo svg{animation:floaty 6.5s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 .hl-orbit{transform-origin:32px 32px;transform-box:fill-box;opacity:.6}
 .js .hl-halo{opacity:0;animation:halo-in 1s ease .15s forwards}
 @keyframes halo-in{to{opacity:1}}
